@@ -68,5 +68,4 @@ class MainActivity : BaseActivity<MainPresenter>(), MainView {
         tvCnt.text = getString(R.string.cnt, adapter.itemCount.toString())
         rvTransactions.smoothScrollToPosition(adapter.itemCount - 1)
     }
-
 }
