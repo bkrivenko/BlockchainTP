@@ -1,0 +1,21 @@
+<resources>
+    <string name="app_name">BlockchainTP</string>
+
+    <string name="base_url">https://api.dev.karta.com/</string>
+
+    <string name="email">Email</string>
+    <string name="password">Password</string>
+    <string name="login">LogIn</string>
+
+    <string name="user_first_name">Name: %1$s</string>
+    <string name="user_last_name">Last Name: %1$s</string>
+    <string name="user_email">EMail: %1$s</string>
+    <string name="logout">LogOut</string>
+    <string name="cnt">All: %1$s</string>
+    <string name="start">start</string>
+    <string name="stop">stop</string>
+    <string name="reset">reset</string>
+
+    <string name="size">Size: %1$s</string>
+    <string name="hash">Hash: %1$s</string>
+</resources>
