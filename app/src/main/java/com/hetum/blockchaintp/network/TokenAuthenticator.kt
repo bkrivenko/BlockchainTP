@@ -15,14 +15,12 @@ import javax.inject.Singleton
 
 @Singleton
 class TokenAuthenticator @Inject constructor(
-//    private val tokenHolder: TokenHolder,
     private val context: Context,
     private val tokenInterceptor: TokenInterceptor,
     private val prefHelper: PrefHelper
 ) :
     Authenticator {
     override fun authenticate(route: Route?, response: Response): Request? {
-
 
 //        if (response.request().header("Authorization") != null) {
 //            return null
@@ -40,7 +38,7 @@ class TokenAuthenticator @Inject constructor(
 
         var body: Token? = null
         try {
-            body = tokenService.updateToken(header!!).execute()?.body()
+            body = tokenService.updateToken(header!!).execute().body()
         } catch (e: Exception) {
 
         }
