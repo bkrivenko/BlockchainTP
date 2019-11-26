@@ -32,7 +32,8 @@ class MainPresenter(view: MainView) : BasePresenter<MainView>(view) {
 
     override fun onViewDestroyed() {
         if (::blockchainRepository.isInitialized)
-            blockchainRepository.webSocket.cancel()
+            stopWebSocket()
+
     }
 
     @SuppressLint("CheckResult")
@@ -48,6 +49,7 @@ class MainPresenter(view: MainView) : BasePresenter<MainView>(view) {
 
     @SuppressLint("CheckResult")
     private fun startWebSocket() {
+        stopWebSocket()
         blockchainRepository.getTransaction().subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
             .subscribe(
@@ -62,7 +64,7 @@ class MainPresenter(view: MainView) : BasePresenter<MainView>(view) {
     }
 
     fun closeConnection() {
-        blockchainRepository.webSocket.cancel()
+        stopWebSocket()
     }
 
     @SuppressLint("CheckResult")
@@ -88,6 +90,12 @@ class MainPresenter(view: MainView) : BasePresenter<MainView>(view) {
     private fun clearData() {
         prefHelper.clearToken()
         view.openAuthorizationActivity()
+    }
+
+    private fun stopWebSocket() {
+        if (blockchainRepository.webSocket != null) {
+            blockchainRepository.webSocket!!.cancel()
+        }
     }
 
     private fun logError(tag: String, error: String) {

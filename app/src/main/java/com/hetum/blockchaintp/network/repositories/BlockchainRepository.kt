@@ -11,7 +11,7 @@ import java.util.concurrent.TimeUnit
 
 class BlockchainRepository {
 
-    lateinit var webSocket: WebSocket
+    var webSocket: WebSocket? = null
 
     fun getTransaction(): Observable<BlockchainInfo> {
 
