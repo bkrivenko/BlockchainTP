@@ -3,9 +3,9 @@ package com.hetum.blockchaintp.injection.module
 import android.content.Context
 import com.hetum.blockchaintp.R
 import com.hetum.blockchaintp.common.PrefHelper
-import com.hetum.blockchaintp.injection.TokenAuthenticator
-import com.hetum.blockchaintp.injection.TokenInterceptor
 import com.hetum.blockchaintp.network.IDataApi
+import com.hetum.blockchaintp.network.TokenAuthenticator
+import com.hetum.blockchaintp.network.TokenInterceptor
 import dagger.Module
 import dagger.Provides
 import dagger.Reusable
@@ -34,12 +34,19 @@ object NetworkModule {
     internal fun provideRetrofitInterface(context: Context, prefHelper: PrefHelper): Retrofit {
         val clientBuilder = OkHttpClient.Builder()
 
-        val tokenInterceptor = TokenInterceptor(prefHelper)
+        val tokenInterceptor =
+            TokenInterceptor(prefHelper)
 
         val loggingInterceptor = HttpLoggingInterceptor()
         loggingInterceptor.level = HttpLoggingInterceptor.Level.BODY
         clientBuilder
-            .authenticator(TokenAuthenticator(context, tokenInterceptor, prefHelper))
+            .authenticator(
+                TokenAuthenticator(
+                    context,
+                    tokenInterceptor,
+                    prefHelper
+                )
+            )
             .addInterceptor(loggingInterceptor)
             .addInterceptor(tokenInterceptor)
 

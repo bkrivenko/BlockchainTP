@@ -1,10 +1,9 @@
-package com.hetum.blockchaintp.injection
+package com.hetum.blockchaintp.network
 
 import android.content.Context
 import com.hetum.blockchaintp.R
 import com.hetum.blockchaintp.common.PrefHelper
 import com.hetum.blockchaintp.models.Token
-import com.hetum.blockchaintp.network.IDataApi
 import okhttp3.Authenticator
 import okhttp3.Request
 import okhttp3.Response

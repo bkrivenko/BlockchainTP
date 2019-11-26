@@ -1,4 +1,4 @@
-package com.hetum.blockchaintp.injection
+package com.hetum.blockchaintp.network
 
 import com.hetum.blockchaintp.common.PrefHelper
 import okhttp3.Interceptor
