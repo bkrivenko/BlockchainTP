@@ -8,11 +8,8 @@ class SplashScreenPresenter(view: SplashScreenView) : BasePresenter<SplashScreen
 
     @Inject
     lateinit var prefHelper: PrefHelper
-    @Inject
-//    lateinit var tokenInterceptor: TokenInterceptor
 
     override fun onViewCreated() {
-//        tokenInterceptor.token = prefHelper.token
         checkAuthorizationToken()
     }
 
