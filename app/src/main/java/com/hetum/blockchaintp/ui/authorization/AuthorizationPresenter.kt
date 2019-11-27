@@ -2,6 +2,7 @@ package com.hetum.blockchaintp.ui.authorization
 
 import android.annotation.SuppressLint
 import android.util.Patterns
+import com.hetum.blockchaintp.R
 import com.hetum.blockchaintp.base.BasePresenter
 import com.hetum.blockchaintp.common.PrefHelper
 import com.hetum.blockchaintp.models.Token
@@ -38,16 +39,20 @@ class AuthorizationPresenter(view: AuthorizationView) : BasePresenter<Authorizat
 
     @SuppressLint("CheckResult")
     fun logIn(email: String, password: String) {
-        val params = HashMap<String, String>()
-        params["email"] = email
-        params["password"] = password
+        if (view.isOnline()) {
+            val params = HashMap<String, String>()
+            params["email"] = email
+            params["password"] = password
 
-        accountRepository.logIn(params)
-            .observeOn(AndroidSchedulers.mainThread())
-            .subscribeOn(Schedulers.io()).subscribe(
-                { token -> saveTokenAndStartNewActivity(token) },
-                { throwable -> view.showError(throwable.message.toString()) }
-            )
+            accountRepository.logIn(params)
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribeOn(Schedulers.io()).subscribe(
+                    { token -> saveTokenAndStartNewActivity(token) },
+                    { throwable -> view.showError(throwable.message.toString()) }
+                )
+        } else {
+            view.showToast(R.string.no_internet)
+        }
     }
 
     private fun saveTokenAndStartNewActivity(token: Token) {

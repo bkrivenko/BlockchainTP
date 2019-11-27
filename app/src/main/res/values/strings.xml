@@ -7,6 +7,8 @@
     <string name="password">Password</string>
     <string name="login">LogIn</string>
 
+    <string name="no_internet">No internet connection</string>
+
     <string name="user_first_name">Name: %1$s</string>
     <string name="user_last_name">Last Name: %1$s</string>
     <string name="user_email">EMail: %1$s</string>

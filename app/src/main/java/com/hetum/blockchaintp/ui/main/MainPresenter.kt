@@ -3,6 +3,7 @@ package com.hetum.blockchaintp.ui.main
 import android.annotation.SuppressLint
 import android.util.Log
 import com.auth0.android.jwt.JWT
+import com.hetum.blockchaintp.R
 import com.hetum.blockchaintp.base.BasePresenter
 import com.hetum.blockchaintp.common.PrefHelper
 import com.hetum.blockchaintp.models.Info
@@ -38,25 +39,33 @@ class MainPresenter(view: MainView) : BasePresenter<MainView>(view) {
 
     @SuppressLint("CheckResult")
     private fun getAccountInfo() {
-        accountRepository.getProfileInfo()
-            .observeOn(AndroidSchedulers.mainThread())
-            .subscribeOn(Schedulers.io())
-            .subscribe(
-                { account -> fillForm(account.info) },
-                { throwable -> logError("Profile", throwable.message.toString()) }
-            )
+        if (view.isOnline()) {
+            accountRepository.getProfileInfo()
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribeOn(Schedulers.io())
+                .subscribe(
+                    { account -> fillForm(account.info) },
+                    { throwable -> logError("Profile", throwable.message.toString()) }
+                )
+        } else {
+            view.showToast(R.string.no_internet)
+        }
     }
 
     @SuppressLint("CheckResult")
     private fun startWebSocket() {
-        stopWebSocket()
-        blockchainRepository.getTransaction().subscribeOn(Schedulers.io())
-            .observeOn(AndroidSchedulers.mainThread())
-            .subscribe(
-                { blockchainInfo ->
-                    view.addDataToList(blockchainInfo)
-                },
-                { error -> logError("LogOut", error.message!!) })
+        if (view.isOnline()) {
+            stopWebSocket()
+            blockchainRepository.getTransaction().subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(
+                    { blockchainInfo ->
+                        view.addDataToList(blockchainInfo)
+                    },
+                    { error -> logError("LogOut", error.message!!) })
+        } else {
+            view.showToast(R.string.no_internet)
+        }
     }
 
     fun startSocket() {
